@@ -1,41 +1,58 @@
-import React from "react";
-import PickMeals from "../Assets/pick-meals-image.png";
-import ChooseMeals from "../Assets/choose-image.png";
-import DeliveryMeals from "../Assets/delivery-image.png";
+import React, { useEffect, useRef } from "react";
+import lottie from "lottie-web"; // Import the lottie library
 
 const Work = () => {
   const workInfoData = [
     {
-      image: PickMeals,
-      title: "Pick Meals",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et sagittis duis elementum interdum facilisi bibendum.",
+      animationData: require('./eamcet.json'), // Replace with your animation JSON file
+      title: "Master EAMCET at Your Own Pace",
+      text: "Gain mastery over EAMCET's 1st and 2nd-year syllabus while honing your objective problem-solving skills through our self-paced course",
     },
     {
-      image: ChooseMeals,
-      title: "Choose How Often",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et ",
+      animationData: require('./ipe.json'), // Replace with your animation JSON file
+      title: "Supercharge with IPE Fastrack",
+      text: "As your intermediate exams approach, we provide concise concept reviews and fast-track IPE revisions to boost your confidence",
     },
     {
-      image: DeliveryMeals,
-      title: "Fast Deliveries",
-      text: "Lorem ipsum dolor sit amet consectetur. Maecenas orci et lorem ipsum",
+      animationData: require('./mentorship.json'), // Replace with your animation JSON file
+      title: "Mentorship Sessions",
+      text: "Elevate your EAMCET readiness with our one-on-one mentorship sessions, where experienced guides tailor their expertise to your unique learning needs",
     },
   ];
+
+  useEffect(() => {
+    // Load the corresponding Lottie animation for each item in workInfoData
+    workInfoData.forEach((data, index) => {
+      const container = document.querySelector(`#animation-container-${index}`);
+      if (container) {
+        container.innerHTML = "";
+        lottie.loadAnimation({
+          container,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          animationData: data.animationData,
+        });
+      }
+    });
+  }, []); // Run this effect only once on component mount
+
   return (
     <div className="work-section-wrapper">
       <div className="work-section-top">
-        <p className="primary-subheading">Work</p>
-        <h1 className="primary-heading">How It Works</h1>
-        <p className="primary-text">
-          Lorem ipsum dolor sit amet consectetur. Non tincidunt magna non et
-          elit. Dolor turpis molestie dui magnis facilisis at fringilla quam.
-        </p>
+        <h1 className="primary-heading">What we offer ?</h1>
+       
       </div>
       <div className="work-section-bottom">
-        {workInfoData.map((data) => (
+        {workInfoData.map((data, index) => (
           <div className="work-section-info" key={data.title}>
             <div className="info-boxes-img-container">
-              <img src={data.image} alt="" />
+              {/* Create a container for each animation with fixed dimensions */}
+              <div
+                id={`animation-container-${index}`}
+                className="animation-container"
+                style={{ width: "300px", height: "200px" }}
+              ></div>
             </div>
             <h2>{data.title}</h2>
             <p>{data.text}</p>
